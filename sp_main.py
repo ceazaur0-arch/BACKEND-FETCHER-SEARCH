@@ -1,4 +1,5 @@
 """FastAPI app. Render runs it with: uvicorn sp_main:app --host 0.0.0.0 --port $PORT"""
+import base64
 import hashlib
 import hmac
 import json
@@ -22,6 +23,8 @@ app.add_middleware(
 )
 
 STATUSES = {"new", "approved", "sent", "rejected", "needs_check"}
+SESSION_TTL_SECONDS = 12 * 60 * 60
+_LOGIN_FAILURES = {}
 
 
 def db():
@@ -32,15 +35,86 @@ def _same(a, b):
     return hmac.compare_digest((a or "").encode(), (b or "").encode())
 
 
+def _b64url(data):
+    return base64.urlsafe_b64encode(data).decode().rstrip("=")
+
+
+def _session_secret():
+    # Keep DASHBOARD_TOKEN as a server-only signing secret. It is never sent to the browser.
+    return config.cfg("DASHBOARD_TOKEN")
+
+
+def issue_session(email):
+    secret = _session_secret()
+    if not secret:
+        raise HTTPException(503, "DASHBOARD_TOKEN signing secret is not configured on the server")
+    payload = _b64url(json.dumps({"sub": email, "exp": int(time.time()) + SESSION_TTL_SECONDS}, separators=(",", ":")).encode())
+    signature = _b64url(hmac.new(secret.encode(), payload.encode(), hashlib.sha256).digest())
+    return payload + "." + signature
+
+
+def valid_session(token):
+    secret = _session_secret()
+    if not secret or not token or "." not in token:
+        return False
+    try:
+        payload, signature = token.split(".", 1)
+        expected = _b64url(hmac.new(secret.encode(), payload.encode(), hashlib.sha256).digest())
+        if not hmac.compare_digest(signature, expected):
+            return False
+        raw = payload + "=" * (-len(payload) % 4)
+        data = json.loads(base64.urlsafe_b64decode(raw.encode()).decode())
+        email = config.cfg("ADMIN_EMAIL").strip().lower()
+        return bool(email and data.get("sub", "").lower() == email and int(data.get("exp", 0)) > int(time.time()))
+    except Exception:
+        return False
+
+
 def require_dashboard(authorization):
-    token = config.cfg("DASHBOARD_TOKEN")
-    if not token:
-        raise HTTPException(503, "DASHBOARD_TOKEN is not set on the server")
+    if not config.cfg("DASHBOARD_TOKEN"):
+        raise HTTPException(503, "DASHBOARD_TOKEN signing secret is not configured on the server")
+    if not config.cfg("ADMIN_EMAIL") or not config.cfg("ADMIN_PASSWORD"):
+        raise HTTPException(503, "ADMIN_EMAIL and ADMIN_PASSWORD are not configured on the server")
     supplied = (authorization or "")
     if supplied.lower().startswith("bearer "):
         supplied = supplied[7:]
-    if not _same(supplied.strip(), token):
-        raise HTTPException(401, "bad token")
+    if not valid_session(supplied.strip()):
+        raise HTTPException(401, "Session expired. Please sign in again.")
+
+
+class LoginBody(BaseModel):
+    email: str
+    password: str
+
+
+@app.post("/api/auth/login")
+def auth_login(body: LoginBody, request: Request):
+    """Exchange the admin email/password for a short-lived signed dashboard session."""
+    email = config.cfg("ADMIN_EMAIL").strip()
+    password = config.cfg("ADMIN_PASSWORD")
+    secret = _session_secret()
+    if not email or not password or not secret:
+        raise HTTPException(503, "Admin login is not configured. Set ADMIN_EMAIL, ADMIN_PASSWORD and DASHBOARD_TOKEN in Render.")
+
+    forwarded_for = request.headers.get("x-forwarded-for", "")
+    ip = forwarded_for.split(",", 1)[0].strip() if forwarded_for else (request.client.host if request.client else "unknown")
+    now = time.time()
+    state = _LOGIN_FAILURES.get(ip, {"count": 0, "locked_until": 0})
+    if now < state["locked_until"]:
+        raise HTTPException(429, "Too many failed sign-in attempts. Try again in 15 minutes.")
+
+    email_ok = _same(body.email.strip().lower(), email.lower())
+    password_ok = _same(body.password, password)
+    valid = email_ok and password_ok
+    if not valid:
+        state["count"] += 1
+        if state["count"] >= 5:
+            state = {"count": 0, "locked_until": now + 900}
+        _LOGIN_FAILURES[ip] = state
+        raise HTTPException(401, "Email or password is incorrect.")
+
+    _LOGIN_FAILURES.pop(ip, None)
+    return {"access_token": issue_session(email), "token_type": "bearer", "expires_in": SESSION_TTL_SECONDS}
 
 
 def require_cron(key):

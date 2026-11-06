@@ -32,7 +32,9 @@ The original source URL is preserved. A lead is not considered verified merely b
 
 Set these environment variables in Render:
 - `DATABASE_URL` — Neon pooled PostgreSQL URL.
-- `DASHBOARD_TOKEN` — long random secret you create.
+- `DASHBOARD_TOKEN` — long random server-only signing secret (never enter it in the frontend).
+- `ADMIN_EMAIL` — your administrator sign-in email.
+- `ADMIN_PASSWORD` — a strong, unique administrator password.
 - `CRON_KEY` — separate long random secret you create.
 - `GEMINI_API_KEY` — Google AI Studio API key.
 - `FRONTEND_ORIGIN` — exact Vercel frontend origin, e.g. `https://your-project.vercel.app`.
@@ -52,11 +54,12 @@ Call `https://YOUR-SERVICE.onrender.com/api/cron/tick?key=YOUR_CRON_KEY` from yo
 
 ## API
 
+- `POST /api/auth/login` with `{ "email": "...", "password": "..." }` — public sign-in; returns a 12-hour signed session.
 - `GET /api/health`
-- `GET /api/stats` — dashboard token required
-- `GET /api/leads` — dashboard token required
-- `POST /api/discovery/run` — dashboard token required
-- `POST /api/discovery/search` with `{"query":"..."}` — dashboard token required
+- `GET /api/stats` — signed administrator session required
+- `GET /api/leads` — signed administrator session required
+- `POST /api/discovery/run` — signed administrator session required
+- `POST /api/discovery/search` with `{"query":"..."}` — signed administrator session required
 - `POST /api/submit` — manually queue a post/link/text
 - `GET /api/cron/tick?key=...` — CRON key required
 - `POST /api/telegram/webhook`
@@ -68,3 +71,12 @@ Call `https://YOUR-SERVICE.onrender.com/api/cron/tick?key=YOUR_CRON_KEY` from yo
 - A Telegram channel discovered by web search is not automatically readable until you configure an authorised reader session and choose channels.
 - The default X official API settings are intentionally small, but even a small API call can be billable. Keep `X_BEARER_TOKEN` blank if you do not want X API charges.
 - `python -m pytest -q test_core.py` runs offline unit tests. Live platform access still needs to be tested after deployment.
+
+
+## Dashboard email/password sign-in
+Set these environment variables on Render (never in Vercel):
+- `ADMIN_EMAIL`: the single administrator email used to sign in.
+- `ADMIN_PASSWORD`: a strong, unique administrator password.
+- `DASHBOARD_TOKEN`: a long random server-only signing secret (keep your existing value if it is strong; it is no longer entered in the frontend).
+
+The frontend calls `POST /api/auth/login` and receives a signed bearer session that expires after 12 hours. Protected API routes accept only valid signed sessions. Five failed sign-in attempts from the same client IP trigger a 15-minute cooldown. Do not expose these values in `VITE_` variables or commit them to GitHub.

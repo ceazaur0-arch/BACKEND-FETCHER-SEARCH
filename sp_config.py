@@ -4,7 +4,9 @@ import os
 DEFAULTS = {
     # core
     "DATABASE_URL": "sqlite:///sparta.db",  # production: Neon/Supabase Postgres URL
-    "DASHBOARD_TOKEN": "",  # password for the dashboard (you choose it)
+    "DASHBOARD_TOKEN": "",  # server-only HMAC signing secret for dashboard sessions
+    "ADMIN_EMAIL": "",  # administrator login email
+    "ADMIN_PASSWORD": "",  # administrator login password; set only in Render
     "CRON_KEY": "",  # secret for the tick URL your pinger calls
     "FRONTEND_ORIGIN": "*",  # your Netlify URL once known
     # brain

@@ -1,0 +1,18 @@
+[
+  "test_core.py::test_defillama_aggregate",
+  "test_core.py::test_extract_json",
+  "test_core.py::test_failures_retry_then_give_up",
+  "test_core.py::test_full_pipeline_passes_and_drafts",
+  "test_core.py::test_keyword_prefilter_and_daily_cap",
+  "test_core.py::test_lock",
+  "test_core.py::test_manual_web_discovery_query_is_consumed",
+  "test_core.py::test_rate_limit_state_persists",
+  "test_core.py::test_scam_scan",
+  "test_core.py::test_scam_text_auto_fails_and_is_hidden",
+  "test_core.py::test_score_and_domains",
+  "test_core.py::test_slow_calls_never_trigger_rest",
+  "test_core.py::test_thin_evidence_is_dropped",
+  "test_core.py::test_x_burst_then_ten_minute_rest",
+  "test_core.py::test_x_cooldown_from_headers",
+  "test_core.py::test_x_parse"
+]
