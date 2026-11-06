@@ -27,7 +27,7 @@ async def handle(db, update):
     owner = config.cfg("TG_OWNER_ID")
     if not owner:
         if text.startswith("/start"):
-            await notify.send_to(chat_id, "Your chat id is %s. Set TG_OWNER_ID to this number in Vercel and redeploy." % chat_id)
+            await notify.send_to(chat_id, "Your chat id is %s. Set TG_OWNER_ID to this number in Render and redeploy." % chat_id)
         return
     if str(chat_id) != str(owner):
         return  # ignore everyone else silently

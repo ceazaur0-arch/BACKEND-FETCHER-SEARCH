@@ -1,34 +1,163 @@
 {
   "x": [
-    {"id": "x1", "q": "(\"pre-seed\" OR \"seed round\" OR angel) Solana (builders OR founders OR pitches OR applications) -is:retweet"},
-    {"id": "x2", "q": "Solana (grant OR grants OR \"micro-grant\") (apply OR \"applications open\" OR \"now open\") -is:retweet"},
-    {"id": "x3", "q": "Solana (launchpad OR \"token launch\") (raised OR backed OR \"we invested\" OR \"pre-seed\") -is:retweet"},
-    {"id": "x4", "q": "(hiring OR \"we're hiring\" OR \"looking for\") (Rust OR Anchor) Solana (developer OR engineer) remote -is:retweet"},
-    {"id": "x5", "q": "Solana (hackathon OR bounty OR bounties) (\"prize pool\" OR \"pre-seed\" OR accelerator) -is:retweet"},
-    {"id": "x6", "q": "(Solana OR SVM) (partnership OR \"looking for partners\" OR \"co-build\" OR integration) launchpad -is:retweet"},
-    {"id": "x7", "q": "Solana (acquire OR acquiring OR \"looking to buy\" OR \"buying projects\") (project OR protocol OR codebase) -is:retweet"},
-    {"id": "x8", "q": "Solana (\"business development\" OR BD OR \"community manager\" OR ambassador) (hiring OR \"open role\") remote -is:retweet"}
+    {
+      "id": "x1",
+      "q": "(\"we are investing\" OR \"actively investing\" OR \"deploying capital\" OR \"writing checks\") (Web3 OR crypto OR blockchain OR Solana) -is:retweet"
+    },
+    {
+      "id": "x2",
+      "q": "(\"looking to acquire\" OR \"looking to buy\" OR \"acquiring projects\" OR \"buying a protocol\") (Web3 OR crypto OR blockchain) -is:retweet"
+    },
+    {
+      "id": "x3",
+      "q": "(\"open to equity\" OR \"equity investment\" OR \"strategic investment\" OR \"co-investor\") (Web3 OR crypto OR startup) -is:retweet"
+    },
+    {
+      "id": "x4",
+      "q": "(\"seeking founders\" OR \"looking for founders\" OR \"open to pitches\" OR \"send your deck\") (fund OR investor OR venture OR angel) (Web3 OR crypto) -is:retweet"
+    },
+    {
+      "id": "x5",
+      "q": "(\"we're hiring\" OR \"we are hiring\" OR \"looking for a\") (founder OR developer OR engineer OR BD) (Web3 OR crypto OR blockchain) -is:retweet"
+    },
+    {
+      "id": "x6",
+      "q": "(\"seeking partnerships\" OR \"looking for partners\" OR \"strategic partners\" OR \"co-build\") (Web3 OR crypto OR blockchain) -is:retweet"
+    },
+    {
+      "id": "x7",
+      "q": "(\"acqui-hire\" OR \"team acquisition\" OR \"buy a team\" OR \"acquire a startup\") (crypto OR Web3 OR software) -is:retweet"
+    },
+    {
+      "id": "x8",
+      "q": "(\"funding available\" OR \"investment opportunities\" OR \"capital available\") (Web3 OR crypto OR blockchain) -is:retweet"
+    },
+    {
+      "id": "x9",
+      "q": "(\"portfolio companies\" OR \"investment thesis\" OR \"new investments\") (crypto fund OR Web3 fund OR venture) -is:retweet"
+    },
+    {
+      "id": "x10",
+      "q": "(\"looking for projects\" OR \"projects to invest in\" OR \"projects to acquire\") (crypto OR Web3 OR blockchain) -is:retweet"
+    }
   ],
   "farcaster": [
-    {"id": "f1", "q": "Solana grants"},
-    {"id": "f2", "q": "Solana launchpad funding"},
-    {"id": "f3", "q": "hiring Solana Rust"}
+    {
+      "id": "f1",
+      "q": "actively investing crypto web3 founders capital"
+    },
+    {
+      "id": "f2",
+      "q": "looking to acquire buy web3 crypto project protocol"
+    },
+    {
+      "id": "f3",
+      "q": "seeking equity cofounder strategic investment startup"
+    },
+    {
+      "id": "f4",
+      "q": "hiring web3 developer business development partnership"
+    },
+    {
+      "id": "f5",
+      "q": "open to pitches seed funding angel investor"
+    }
   ],
   "reddit": [
-    {"id": "r1", "q": "grant OR funding OR investor OR hiring OR partnership OR accelerator"}
+    {
+      "id": "r1",
+      "q": "investor OR investing OR funding OR acquire OR acquisition OR buyer OR equity OR hiring OR partnership"
+    }
   ],
   "web": [
-    {"id": "w1", "kind": "grant", "q": "Solana ecosystem grants and micro-grants currently open for applications (Solana Foundation, Superteam regional grants, project grants from Jupiter, Helius, Metaplex, Jito and similar), friendly to pre-seed devnet projects, $5k-$50k"},
-    {"id": "w2", "kind": "investor", "q": "Small pre-seed funds, angel syndicates and accelerators that wrote $5k-$100k cheques into Solana projects in the last 6 months, especially launchpads, token-launch tools and DeFi infrastructure"},
-    {"id": "w3", "kind": "investor", "q": "Funds or programs that recently backed token launchpads or launch platforms, with the project name and date of each deal"},
-    {"id": "w4", "kind": "buyer", "q": "Reputable marketplaces and communities where small early-stage crypto or Solana projects (code plus concept, devnet stage) are legitimately sold for $500-$5,000"},
-    {"id": "w5", "kind": "job", "q": "Open remote Rust or Anchor Solana developer roles posted in the last 30 days at small teams (junior to mid level), plus Solana BD or community roles"},
-    {"id": "w6", "kind": "partnership", "q": "Small Solana projects (wallets, analytics, NFT or community tools, DAOs) that publicly say they want integrations, partners or co-builders for token launches"},
-    {"id": "w7", "kind": "grant", "q": "Solana hackathons and builder programs with prizes or pre-seed funding that are open now or announced for the next 3 months"}
+    {
+      "id": "w1",
+      "kind": "investor",
+      "q": "Find individual angel investors, venture funds, family offices and crypto/Web3 companies publicly stating they are actively investing, deploying capital, writing checks, seeking founder pitches or making strategic investments. Include recent first-person statements, cheque size if stated, stage, sector, date and original source."
+    },
+    {
+      "id": "w2",
+      "kind": "buyer",
+      "q": "Find individuals and companies publicly looking to acquire, buy, merge with, or acquire-hire Web3, crypto, blockchain or software projects, protocols, products, codebases or teams. Only explicit buyer intent and original dated sources."
+    },
+    {
+      "id": "w3",
+      "kind": "equity",
+      "q": "Find people and companies offering equity investment, taking equity stakes, seeking co-founders, strategic investors or joint ventures with early-stage technology and Web3 projects. Capture exact terms if public."
+    },
+    {
+      "id": "w4",
+      "kind": "hiring",
+      "q": "Find active hiring posts from Web3 and technology companies and founders seeking developers, engineers, founders, business development, growth, community and operations talent. Prioritise recent original posts and job pages."
+    },
+    {
+      "id": "w5",
+      "kind": "partnership",
+      "q": "Find companies and individuals seeking Web3 partnerships, integrations, co-builders, distribution partners, ecosystem projects or strategic collaborations. Require evidence of an active ask."
+    },
+    {
+      "id": "w6",
+      "kind": "investor",
+      "q": "Search public X posts and profiles on x.com and twitter.com for founders, angels, VCs, funds and companies stating they are investing in Web3 or crypto projects, open to pitches, deploying capital or writing checks. Return original post URLs and dates."
+    },
+    {
+      "id": "w7",
+      "kind": "telegram_channel",
+      "q": "Search public Telegram channel pages and indexed t.me messages for first-person announcements from individuals or companies actively investing, offering funding, buying or acquiring Web3 projects, offering equity, hiring, or seeking strategic partnerships. Return the original public message URL where available, the poster or organisation, exact stated intent and date. Do not return generic channel directories or private content."
+    },
+    {
+      "id": "w8",
+      "kind": "farcaster",
+      "q": "Search public Farcaster and Warpcast casts for individuals and companies seeking projects to fund, acquire, hire, partner with or take equity in. Include original cast URLs and dated evidence."
+    },
+    {
+      "id": "w9",
+      "kind": "reddit",
+      "q": "Search public Reddit posts and communities for first-person requests from investors, buyers, founders and companies looking to fund, acquire, hire or partner with Web3 projects. Include original permalink and date."
+    },
+    {
+      "id": "w10",
+      "kind": "company",
+      "q": "Find company websites, venture portfolio pages, acquisition pages and public announcements showing current investment mandates, strategic acquisition activity, startup programmes or open calls for projects. Include official sources and dates."
+    }
   ],
   "keywords": [
-    "invest", "funding", "fund ", "grant", "apply", "application", "hiring", "looking for",
-    "partner", "integration", "seed", "accelerator", "hackathon", "bounty", "acquire",
-    "buy", "launchpad", "raise", "backed", "role", "job", "open to", "pitch"
+    "invest",
+    "investing",
+    "investment",
+    "deploy capital",
+    "writing checks",
+    "write cheques",
+    "funding",
+    "fund",
+    "grant",
+    "acquire",
+    "acquisition",
+    "acqui-hire",
+    "buying",
+    "looking to buy",
+    "looking to acquire",
+    "buyer",
+    "equity",
+    "co-founder",
+    "cofounder",
+    "hiring",
+    "we're hiring",
+    "looking for",
+    "open to pitches",
+    "send your deck",
+    "partnership",
+    "partner",
+    "strategic",
+    "co-build",
+    "joint venture",
+    "seed",
+    "venture",
+    "angel",
+    "portfolio",
+    "raise",
+    "backed",
+    "job",
+    "role"
   ]
 }

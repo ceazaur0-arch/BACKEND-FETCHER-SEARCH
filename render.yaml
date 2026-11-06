@@ -26,5 +26,31 @@ services:
         sync: false
       - key: X_BEARER_TOKEN
         sync: false
+      - key: X_QUERY_INTERVAL_MIN
+        value: "1440"
+      - key: X_MAX_QUERIES_PER_RUN
+        value: "2"
+      - key: X_MAX_RESULTS
+        value: "10"
+      - key: X_DAILY_READS
+        value: "30"
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: NEYNAR_API_KEY
+        sync: false
+      - key: REDDIT_CLIENT_ID
+        sync: false
+      - key: REDDIT_CLIENT_SECRET
+        sync: false
+      - key: REDDIT_SUBS
+        value: "cryptocurrency,defi,solana,web3"
+      - key: TG_API_ID
+        sync: false
+      - key: TG_API_HASH
+        sync: false
+      - key: TG_SESSION
+        sync: false
+      - key: TG_CHANNELS
+        sync: false
       - key: DAILY_ITEM_CAP
         value: "15"

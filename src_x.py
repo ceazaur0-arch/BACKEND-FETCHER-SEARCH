@@ -79,6 +79,8 @@ async def fetch(db, deadline):
     last = state.setdefault("last", {})
     since = state.setdefault("since", {})
     out = []
+    searched = 0
+    max_queries = max(1, min(5, config.cfgi("X_MAX_QUERIES_PER_RUN")))
     async with httpx.AsyncClient(timeout=15) as client:
         for q in profile.load_queries().get("x", []):
             if time.time() > deadline - 12:
@@ -86,6 +88,8 @@ async def fetch(db, deadline):
             qid = q["id"]
             if not force and time.time() - last.get(qid, 0) < interval:
                 continue
+            if searched >= max_queries:
+                break
             if reads + per > cap:
                 state["capped_on"] = day
                 break
@@ -103,6 +107,7 @@ async def fetch(db, deadline):
                 params["since_id"] = since[qid]
             r = await client.get(SEARCH_URL, params=params, headers={"Authorization": "Bearer " + token})
             last[qid] = time.time()
+            searched += 1
             wait = cooldown_from_headers(r.headers, time.time(), r.status_code)
             if r.status_code == 200:
                 items, newest = parse(r.json(), qid)

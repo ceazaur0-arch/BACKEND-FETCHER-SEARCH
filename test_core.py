@@ -12,6 +12,7 @@ import sp_runner as runner
 import sp_safety as safety
 import src_defillama
 import src_x
+import src_web
 
 
 def new_db(tmp_path):
@@ -197,3 +198,28 @@ def test_failures_retry_then_give_up(tmp_path, monkeypatch):
         asyncio.run(pipeline.advance(db, runner.next_row(db, 120), 120))
     row = db.query("SELECT * FROM leads")[0]
     assert row["stage"] == "failed" and row["status"] == "hidden"
+
+
+def test_manual_web_discovery_query_is_consumed(tmp_path, monkeypatch):
+    db = new_db(tmp_path)
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setenv("WEB_INTERVAL_MIN", "180")
+    dbm.kv_set(db, "manual_web_search", {"query": "crypto funds acquiring early-stage projects"})
+    dbm.kv_set(db, "force_collect", 1)
+
+    async def fake_generate(prompt, *, grounded=False, json_mode=False, timeout=40, system=None):
+        assert grounded is True
+        assert "crypto funds acquiring early-stage projects" in prompt
+        return json.dumps([{
+            "name": "Fund Example",
+            "url": "https://fund.example/opportunities",
+            "summary": "Public page says it is seeking early-stage investments.",
+            "date": "2026-11"
+        }]), []
+
+    monkeypatch.setattr(llm, "generate", fake_generate)
+    items = asyncio.run(src_web.fetch(db, time.time() + 60))
+    assert len(items) == 1
+    assert items[0]["source"] == "web"
+    assert items[0]["url"] == "https://fund.example/opportunities"
+    assert dbm.kv_get(db, "manual_web_search") is None

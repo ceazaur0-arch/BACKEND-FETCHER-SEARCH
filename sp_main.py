@@ -105,10 +105,20 @@ def stats(authorization: str = Header(default="")):
         "configured": {
             "gemini": bool(config.cfg("GEMINI_API_KEY")),
             "x": bool(config.cfg("X_BEARER_TOKEN")),
+            "x_public_web": bool(config.cfg("GEMINI_API_KEY")),
             "telegram_bot": bool(config.cfg("TG_BOT_TOKEN") and config.cfg("TG_OWNER_ID")),
             "telegram_reader": bool(config.cfg("TG_SESSION") and config.cfg("TG_CHANNELS")),
+            "telegram_discovery": bool(config.cfg("GEMINI_API_KEY")),
             "farcaster": bool(config.cfg("NEYNAR_API_KEY")),
-            "reddit": bool(config.cfg("REDDIT_CLIENT_ID")),
+            "reddit": bool(config.cfg("REDDIT_CLIENT_ID") and config.cfg("REDDIT_CLIENT_SECRET")),
+            "web": bool(config.cfg("GEMINI_API_KEY")),
+        },
+        "source_activity": {
+            "x": dbm.kv_get(d, "x_state", {}) or {},
+            "telegram": dbm.kv_get(d, "tg_state", {}) or {},
+            "farcaster": dbm.kv_get(d, "fc_state", {}) or {},
+            "reddit": dbm.kv_get(d, "reddit_state", {}) or {},
+            "web": dbm.kv_get(d, "web_state", {}) or {},
         },
     }
 
@@ -136,6 +146,35 @@ class DraftBody(BaseModel):
 
 class SubmitBody(BaseModel):
     text: str
+
+
+class DiscoverySearchBody(BaseModel):
+    query: str
+
+
+@app.post("/api/discovery/run")
+def discovery_run(authorization: str = Header(default="")):
+    """Request one low-volume collection cycle on the next cron tick."""
+    require_dashboard(authorization)
+    dbm.kv_set(db(), "force_collect", 1)
+    return {"queued": True, "message": "Discovery is queued for the next scheduled tick."}
+
+
+@app.post("/api/discovery/search")
+def discovery_search(body: DiscoverySearchBody, authorization: str = Header(default="")):
+    """Queue one Gemini-grounded public-web/social-index search for a custom topic."""
+    require_dashboard(authorization)
+    query = (body.query or "").strip()
+    if len(query) < 3:
+        raise HTTPException(400, "Enter at least 3 characters.")
+    if len(query) > 300:
+        raise HTTPException(400, "Search query must be 300 characters or fewer.")
+    if not config.cfg("GEMINI_API_KEY"):
+        raise HTTPException(503, "GEMINI_API_KEY is not configured.")
+    d = db()
+    dbm.kv_set(d, "manual_web_search", {"query": query, "requested_at": time.time()})
+    dbm.kv_set(d, "force_collect", 1)
+    return {"queued": True, "message": "Your public-web search is queued for the next scheduled tick."}
 
 
 @app.post("/api/leads/{lead_id}/status")

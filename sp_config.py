@@ -1,4 +1,4 @@
-"""Settings. Everything comes from environment variables (set them in Vercel)."""
+"""Settings. Everything comes from environment variables (set backend values in Render)."""
 import os
 
 DEFAULTS = {
@@ -21,24 +21,25 @@ DEFAULTS = {
     "X_WINDOW": "60",  # window length in seconds
     "X_REST": "600",  # rest after a burst, seconds (10 minutes)
     "X_MAX_RESULTS": "10",  # posts per search (API minimum is 10)
-    "X_DAILY_READS": "300",  # hard daily cap on posts read (controls cost)
-    "X_QUERY_INTERVAL_MIN": "60",  # re-run each saved query at most this often
+    "X_MAX_QUERIES_PER_RUN": "2",  # keep each scheduled X run small
+    "X_DAILY_READS": "30",  # hard daily cap on posts read (controls cost)
+    "X_QUERY_INTERVAL_MIN": "1440",  # each X query at most once per day
     # telegram reading (optional, uses a separate account)
     "TG_API_ID": "",
     "TG_API_HASH": "",
     "TG_SESSION": "",
     "TG_CHANNELS": "",  # comma separated public channel usernames
-    "TG_INTERVAL_MIN": "30",
+    "TG_INTERVAL_MIN": "360",
     # other social sources (optional)
     "NEYNAR_API_KEY": "",  # Farcaster
-    "FARCASTER_INTERVAL_MIN": "60",
+    "FARCASTER_INTERVAL_MIN": "360",
     "REDDIT_CLIENT_ID": "",
     "REDDIT_CLIENT_SECRET": "",
-    "REDDIT_SUBS": "solana",
-    "REDDIT_INTERVAL_MIN": "60",
+    "REDDIT_SUBS": "cryptocurrency,defi,solana,web3",
+    "REDDIT_INTERVAL_MIN": "360",
     # free data
     "DEFILLAMA_INTERVAL_HOURS": "24",
-    "WEB_INTERVAL_MIN": "90",
+    "WEB_INTERVAL_MIN": "180",
     # pipeline limits
     "SCORE_MIN": "70",
     "TICK_SECONDS": "50",

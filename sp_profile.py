@@ -1,6 +1,6 @@
 """Loads your project/founder profile and the saved queries.
 
-On Vercel you can override either file without redeploying code by setting the
+On Render you can override either file without redeploying code by setting the
 PROFILE_JSON or QUERIES_JSON environment variable to the full JSON text.
 """
 import json

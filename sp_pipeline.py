@@ -19,7 +19,7 @@ import sp_profile as profile
 import sp_safety as safety
 
 NEED = {"new": 10, "triaged": 30, "scored": 30, "verified": 15}  # seconds a stage needs
-KINDS = {"investor", "grant", "buyer", "job", "partnership"}
+KINDS = {"investor", "grant", "buyer", "job", "partnership", "equity"}
 
 RULES = """RULES (strict):
 - Use only facts you can support with a source URL you actually found. If you cannot find evidence, write "unknown". Never guess or invent.
@@ -30,9 +30,9 @@ RULES = """RULES (strict):
 TRIAGE = """### TASK: TRIAGE
 @@RULES@@
 You triage inbound signals for a Solana founder. PROFILE: @@PROFILE@@
-Decide whether the item is a real, actionable opportunity: an investor/fund/accelerator/grant open to projects like SPARTA (kind investor or grant), a buyer or marketplace for the project (buyer), a hiring role that fits the founder (job), or a project open to partnerships or co-development (partnership). Anything else: relevant=false.
+Decide whether the item is a real, actionable opportunity: an investor/fund/accelerator/grant open to projects like SPARTA (kind investor or grant), a buyer or marketplace for the project (buyer), a hiring role that fits the founder (job), a person or company explicitly offering equity or seeking an equity co-founder (equity), or a project open to partnerships or co-development (partnership). Anything else: relevant=false.
 @@ITEM@@
-JSON: {"relevant": true|false, "kind": "investor|grant|buyer|job|partnership|other", "name": "entity or role + company", "summary": "one sentence", "why": "short reason"}"""
+JSON: {"relevant": true|false, "kind": "investor|grant|buyer|job|partnership|equity|other", "name": "entity or role + company", "summary": "one sentence", "why": "short reason"}"""
 
 SCORE = """### TASK: PROFILE_AND_SCORE
 @@RULES@@
@@ -41,7 +41,7 @@ Lead kind: @@KIND@@. Lead name: @@NAME@@. Triage summary: @@SUMMARY@@
 @@ITEM@@
 Find: what the entity is, its official site, recent dated activity (deals, grants, postings), typical cheque or pay size, chain and sector focus, who decides, and the public route to apply or contact.
 Rate each component from 0 to 1 using evidence only (use 0 if unknown):
-sector_match = topic fit with the profile; stage_match = fit with devnet stage / founder seniority; chain_match = Solana or Rust relevance; size_match = size or pay fits the raise, sale price or role; recent_activity = dated activity in the last 6 months; reachability = a clear public route to apply.
+sector_match = topic fit with the profile; stage_match = fit with devnet stage / founder seniority; chain_match = Solana, SVM or relevant Web3 ecosystem fit; size_match = size or pay fits the raise, sale price or role; recent_activity = dated activity in the last 6 months; reachability = a clear public route to apply.
 JSON: {"entity": {"name": "", "site": "", "type": ""}, "summary": "", "facts": [{"claim": "", "url": "https://...", "date": "YYYY-MM or unknown"}], "decision_maker": "", "contact_route": "", "components": {"sector_match": 0, "stage_match": 0, "chain_match": 0, "size_match": 0, "recent_activity": 0, "reachability": 0}, "red_flags": []}"""
 
 VERIFY = """### TASK: VERIFY
