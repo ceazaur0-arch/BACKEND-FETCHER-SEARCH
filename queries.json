@@ -1,0 +1,34 @@
+{
+  "x": [
+    {"id": "x1", "q": "(\"pre-seed\" OR \"seed round\" OR angel) Solana (builders OR founders OR pitches OR applications) -is:retweet"},
+    {"id": "x2", "q": "Solana (grant OR grants OR \"micro-grant\") (apply OR \"applications open\" OR \"now open\") -is:retweet"},
+    {"id": "x3", "q": "Solana (launchpad OR \"token launch\") (raised OR backed OR \"we invested\" OR \"pre-seed\") -is:retweet"},
+    {"id": "x4", "q": "(hiring OR \"we're hiring\" OR \"looking for\") (Rust OR Anchor) Solana (developer OR engineer) remote -is:retweet"},
+    {"id": "x5", "q": "Solana (hackathon OR bounty OR bounties) (\"prize pool\" OR \"pre-seed\" OR accelerator) -is:retweet"},
+    {"id": "x6", "q": "(Solana OR SVM) (partnership OR \"looking for partners\" OR \"co-build\" OR integration) launchpad -is:retweet"},
+    {"id": "x7", "q": "Solana (acquire OR acquiring OR \"looking to buy\" OR \"buying projects\") (project OR protocol OR codebase) -is:retweet"},
+    {"id": "x8", "q": "Solana (\"business development\" OR BD OR \"community manager\" OR ambassador) (hiring OR \"open role\") remote -is:retweet"}
+  ],
+  "farcaster": [
+    {"id": "f1", "q": "Solana grants"},
+    {"id": "f2", "q": "Solana launchpad funding"},
+    {"id": "f3", "q": "hiring Solana Rust"}
+  ],
+  "reddit": [
+    {"id": "r1", "q": "grant OR funding OR investor OR hiring OR partnership OR accelerator"}
+  ],
+  "web": [
+    {"id": "w1", "kind": "grant", "q": "Solana ecosystem grants and micro-grants currently open for applications (Solana Foundation, Superteam regional grants, project grants from Jupiter, Helius, Metaplex, Jito and similar), friendly to pre-seed devnet projects, $5k-$50k"},
+    {"id": "w2", "kind": "investor", "q": "Small pre-seed funds, angel syndicates and accelerators that wrote $5k-$100k cheques into Solana projects in the last 6 months, especially launchpads, token-launch tools and DeFi infrastructure"},
+    {"id": "w3", "kind": "investor", "q": "Funds or programs that recently backed token launchpads or launch platforms, with the project name and date of each deal"},
+    {"id": "w4", "kind": "buyer", "q": "Reputable marketplaces and communities where small early-stage crypto or Solana projects (code plus concept, devnet stage) are legitimately sold for $500-$5,000"},
+    {"id": "w5", "kind": "job", "q": "Open remote Rust or Anchor Solana developer roles posted in the last 30 days at small teams (junior to mid level), plus Solana BD or community roles"},
+    {"id": "w6", "kind": "partnership", "q": "Small Solana projects (wallets, analytics, NFT or community tools, DAOs) that publicly say they want integrations, partners or co-builders for token launches"},
+    {"id": "w7", "kind": "grant", "q": "Solana hackathons and builder programs with prizes or pre-seed funding that are open now or announced for the next 3 months"}
+  ],
+  "keywords": [
+    "invest", "funding", "fund ", "grant", "apply", "application", "hiring", "looking for",
+    "partner", "integration", "seed", "accelerator", "hackathon", "bounty", "acquire",
+    "buy", "launchpad", "raise", "backed", "role", "job", "open to", "pitch"
+  ]
+}

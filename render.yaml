@@ -1,0 +1,30 @@
+# Optional Render Blueprint. You can also fill the same values in by hand in the Render dashboard.
+services:
+  - type: web
+    name: sparta-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn sp_main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        sync: false
+      - key: DASHBOARD_TOKEN
+        sync: false
+      - key: CRON_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TG_BOT_TOKEN
+        sync: false
+      - key: TG_WEBHOOK_SECRET
+        sync: false
+      - key: TG_OWNER_ID
+        sync: false
+      - key: X_BEARER_TOKEN
+        sync: false
+      - key: DAILY_ITEM_CAP
+        value: "15"

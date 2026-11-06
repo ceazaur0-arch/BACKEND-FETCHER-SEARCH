@@ -1,0 +1,38 @@
+{
+  "project": {
+    "name": "SPARTA",
+    "what": "A token launchpad on Solana",
+    "chain": "Solana",
+    "stage": "devnet",
+    "mainnet_date": "",
+    "raise_usd": {"min": 5000, "max": 15000},
+    "raise_type": "grants or small checks (equity or tokens, open to discuss)",
+    "region": "worldwide",
+    "traction": "",
+    "links": {"site": "", "github": "", "x": ""},
+    "open_to_sale": true,
+    "min_sale_price_usd": 500
+  },
+  "founder": {
+    "name": "Macdonald Mecha",
+    "portfolio": "https://macdonaldmecha.netlify.app",
+    "languages": ["English", "Swahili"],
+    "skills_stated": ["Rust on Solana (founder's own statement)", "Web3 community management", "Business development and partnerships", "KOL relations", "Content creation"],
+    "experience": [
+      "Elder at KardiaChain since May 2026 (Community Ambassador Jan-Apr 2026)",
+      "Business Development at ai.moonlist.app since Aug 2026",
+      "Content creator, Magic Lab at Magic Eden, Aug 2025 - Feb 2026",
+      "Agent at Nuzo, May-Jul 2025"
+    ],
+    "avoid_claims": [
+      "Do not claim years of Rust experience, shipped Solana programs or audits unless a repo link is listed in project.links.github",
+      "Do not state traction numbers that are empty in the profile"
+    ]
+  },
+  "targets": {
+    "investor_or_grant": "Solana-friendly pre-seed, angels, accelerators and grants that write $5k-$50k cheques, ideally backing launchpads or token-launch tooling",
+    "buyer": "Legitimate buyers or marketplaces for a small devnet project, from about $500 upward",
+    "job": "Remote Rust/Anchor Solana developer roles (junior to mid) and web3 BD or community roles at small, actively hiring, unsaturated teams",
+    "partnership": "Small web3 projects (wallets, analytics, NFT or community tools, DAOs) open to integrations or co-building"
+  }
+}
