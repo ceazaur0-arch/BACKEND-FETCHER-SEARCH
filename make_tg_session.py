@@ -4,7 +4,7 @@ Run it once anywhere Python runs (a free Google Colab notebook works from a phon
     pip install telethon
     python make_tg_session.py
 Use a SPARE Telegram account, never your main one. Paste the printed string into the
-TG_SESSION environment variable in Vercel. Keep it secret: it is a login to that account.
+TG_SESSION environment variable in Render. Keep it secret: it is a login to that account.
 Get your api id and hash free at https://my.telegram.org
 """
 from telethon.sessions import StringSession

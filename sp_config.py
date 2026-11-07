@@ -33,6 +33,7 @@ DEFAULTS = {
     "TG_SESSION": "",
     "TG_CHANNELS": "",  # comma separated public channel usernames
     "TG_INTERVAL_MIN": "360",
+    "TG_SEARCHES_PER_RUN": "2",
     # other social sources (optional)
     "NEYNAR_API_KEY": "",  # Farcaster
     "FARCASTER_INTERVAL_MIN": "360",
@@ -42,6 +43,7 @@ DEFAULTS = {
     "REDDIT_INTERVAL_MIN": "360",
     # free data
     "DEFILLAMA_INTERVAL_HOURS": "24",
+    "DEFILLAMA_MAX_ITEMS": "6",  # new investors queued per DefiLlama run
     "WEB_INTERVAL_MIN": "180",
     # pipeline limits
     "SCORE_MIN": "70",

@@ -17,12 +17,13 @@ import src_telegram
 import src_web
 import src_x
 
+# Free and cheap sources go first so the per tick cap never starves them.
 SOURCES = [
+    ("defillama", src_defillama),
+    ("telegram", src_telegram),
     ("x", src_x),
     ("farcaster", src_farcaster),
     ("reddit", src_reddit),
-    ("defillama", src_defillama),
-    ("telegram", src_telegram),
     ("web", src_web),
 ]
 OPEN_STAGES = ("new", "triaged", "scored", "verified")

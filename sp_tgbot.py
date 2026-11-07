@@ -62,6 +62,13 @@ def status_text(db):
     lines = ["Leads by stage: " + counts, "X posts read today: %s of %s" % (reads, config.cfg("X_DAILY_READS")), "Last tick: " + age]
     if xs.get("error"):
         lines.append("X problem: " + xs["error"])
+    ls = dbm.kv_get(db, "llama_state", {}) or {}
+    lines.append("DefiLlama: " + (ls["error"] if ls.get("error") else ("last run %d min ago, %s new" % ((time.time() - ls["last"]) / 60, ls.get("last_items", 0)) if ls.get("last") else "not run yet")))
+    ts = dbm.kv_get(db, "tg_state", {}) or {}
+    if not (config.cfg("TG_API_ID") and config.cfg("TG_API_HASH") and config.cfg("TG_SESSION")):
+        lines.append("Telegram reader: not set up")
+    else:
+        lines.append("Telegram reader: " + (ts["error"] if ts.get("error") else ("last run %d min ago, %s new" % ((time.time() - ts["last"]) / 60, ts.get("last_items", 0)) if ts.get("last") else "not run yet")))
     return "\n".join(lines)
 
 

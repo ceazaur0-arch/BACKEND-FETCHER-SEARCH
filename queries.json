@@ -159,5 +159,47 @@
     "backed",
     "job",
     "role"
+  ],
+  "telegram": [
+    {
+      "id": "t1",
+      "q": "actively investing web3"
+    },
+    {
+      "id": "t2",
+      "q": "looking to acquire crypto project"
+    },
+    {
+      "id": "t3",
+      "q": "open to pitches founders crypto"
+    },
+    {
+      "id": "t4",
+      "q": "seed funding solana"
+    },
+    {
+      "id": "t5",
+      "q": "grants solana projects"
+    },
+    {
+      "id": "t6",
+      "q": "hiring solana developer"
+    },
+    {
+      "id": "t7",
+      "q": "strategic partnership web3"
+    },
+    {
+      "id": "t8",
+      "q": "angel investor crypto"
+    },
+    {
+      "id": "t9",
+      "q": "equity investment web3 startup"
+    },
+    {
+      "id": "t10",
+      "q": "launchpad funding"
+    }
   ]
 }

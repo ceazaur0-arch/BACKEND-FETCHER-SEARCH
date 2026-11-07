@@ -54,16 +54,24 @@ async def fetch(db, deadline):
     state.pop("error", None)
     dbm.kv_set(db, "llama_state", state)
     now = time.time()
+    max_items = config.cfgi("DEFILLAMA_MAX_ITEMS")
     quarter = "%s-Q%d" % (time.strftime("%Y", time.gmtime(now)), (time.gmtime(now).tm_mon - 1) // 3 + 1)
     out = []
-    for inv, deals in aggregate(r.json().get("raises"), now):
+    for inv, deals in aggregate(r.json().get("raises"), now, top=40):
+        if len(out) >= max_items:
+            break
+        key = "llama:%s:%s" % (inv.lower(), quarter)
+        if db.query("SELECT 1 AS x FROM leads WHERE key=?", (key,)):
+            continue  # already queued before, so move on to the next investor
         lines = ["- %s (%s, %s, $%sM) %s" % (d["project"], d["round"], d["date"], d["amount_m"], d["source"] or "") for d in deals[:8]]
         out.append({
-            "key": "llama:%s:%s" % (inv.lower(), quarter),
+            "key": key,
             "source": "defillama",
             "url": "https://defillama.com/raises",
             "text": "[hint: kind=investor] Investor %s took part in %d small Solana rounds in the last 12 months:\n%s" % (inv, len(deals), "\n".join(lines)),
             "author": inv,
             "priority": 0,
         })
+    state["last_items"] = len(out)
+    dbm.kv_set(db, "llama_state", state)
     return out

@@ -181,11 +181,12 @@ def stats(authorization: str = Header(default="")):
             "x": bool(config.cfg("X_BEARER_TOKEN")),
             "x_public_web": bool(config.cfg("GEMINI_API_KEY")),
             "telegram_bot": bool(config.cfg("TG_BOT_TOKEN") and config.cfg("TG_OWNER_ID")),
-            "telegram_reader": bool(config.cfg("TG_SESSION") and config.cfg("TG_CHANNELS")),
+            "telegram_reader": bool(config.cfg("TG_API_ID") and config.cfg("TG_API_HASH") and config.cfg("TG_SESSION")),
             "telegram_discovery": bool(config.cfg("GEMINI_API_KEY")),
             "farcaster": bool(config.cfg("NEYNAR_API_KEY")),
             "reddit": bool(config.cfg("REDDIT_CLIENT_ID") and config.cfg("REDDIT_CLIENT_SECRET")),
             "web": bool(config.cfg("GEMINI_API_KEY")),
+            "defillama": True,  # public data, no key needed
         },
         "source_activity": {
             "x": dbm.kv_get(d, "x_state", {}) or {},
@@ -193,6 +194,7 @@ def stats(authorization: str = Header(default="")):
             "farcaster": dbm.kv_get(d, "fc_state", {}) or {},
             "reddit": dbm.kv_get(d, "reddit_state", {}) or {},
             "web": dbm.kv_get(d, "web_state", {}) or {},
+            "defillama": dbm.kv_get(d, "llama_state", {}) or {},
         },
     }
 
