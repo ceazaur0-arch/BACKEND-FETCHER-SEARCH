@@ -11,7 +11,8 @@ DEFAULTS = {
     "FRONTEND_ORIGIN": "*",  # your Netlify URL once known
     # brain
     "GEMINI_API_KEY": "",
-    "GEMINI_MODEL": "gemini-2.5-flash",
+    "GEMINI_MODEL": "gemini-3.5-flash-lite",  # triage and drafts (no search grounding)
+    "GEMINI_GROUNDED_MODEL": "gemini-2.5-flash-lite",  # research, verification, web discovery (needs grounding)
     "GEMINI_URL_CONTEXT": "1",
     # telegram bot (alerts + share-to-bot)
     "TG_BOT_TOKEN": "",
