@@ -63,7 +63,7 @@ async def collect(db, deadline, summary):
         try:
             items = await mod.fetch(db, deadline)
         except Exception as e:
-            summary["errors"].append("%s: %s: %s" % (name, type(e).__name__, str(e)[:120]))
+            summary["errors"].append("%s: %s: %s" % (name, type(e).__name__, str(e)[:900]))
             continue
         n = enqueue(db, items, config.cfgi("MAX_NEW_PER_TICK") - total)
         summary["sources"][name] = n

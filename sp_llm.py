@@ -72,7 +72,7 @@ async def generate(prompt, *, grounded=False, json_mode=False, timeout=40.0, sys
         if r.status_code == 400 and grounded and use_ctx:
             r = await client.post(url, headers=headers, json=build(False))
     if r.status_code != 200:
-        raise LLMError("Gemini HTTP %s: %s" % (r.status_code, r.text[:200]))
+        raise LLMError("Gemini HTTP %s (%s): %s" % (r.status_code, model, " ".join(r.text.split())[:900]))
     data = r.json()
     cands = data.get("candidates") or []
     if not cands:
